@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Software Alternatives</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap');
+
+        :root {
+            --bg: #081218;
+            --panel: rgba(12, 22, 31, 0.78);
+            --panel-solid: #111c25;
+            --panel-soft: #162633;
+            --line: rgba(172, 205, 228, 0.16);
+            --line-strong: rgba(172, 205, 228, 0.26);
+            --text: #eaf7ff;
+            --muted: #99b6c8;
+            --accent: #2dd4bf;
+            --accent-2: #60a5fa;
+            --accent-3: #f59e0b;
+            --success: #34d399;
+            --shadow: 0 22px 60px rgba(0, 0, 0, 0.38);
+            --radius-xl: 22px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(900px 420px at 10% -5%, rgba(96, 165, 250, 0.22), transparent 70%),
+                radial-gradient(1000px 500px at 95% 10%, rgba(45, 212, 191, 0.16), transparent 72%),
+                linear-gradient(180deg, #060d12 0%, #081218 38%, #0b131b 100%);
+            line-height: 1.55;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.22;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+            background-size: 28px 28px;
+            mask-image: radial-gradient(circle at 50% 20%, black, transparent 78%);
+            z-index: -1;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .shell {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 1rem 1.25rem 2.5rem;
+        }
+
+        header {
+            position: sticky;
+            top: 12px;
+            z-index: 30;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.9rem 1rem;
+            border-radius: 18px;
+            background: rgba(12, 22, 31, 0.72);
+            border: 1px solid var(--line);
+            backdrop-filter: blur(18px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            min-width: 0;
+        }
+
+        .brand-badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            color: #031118;
+            background:
+                radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.9), transparent 45%),
+                linear-gradient(135deg, var(--accent), var(--accent-2));
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.35), 0 8px 20px rgba(45, 212, 191, 0.2);
+        }
+
+        .brand-text {
+            min-width: 0;
+        }
+
+        .brand-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+
+        .brand-subtitle {
+            color: var(--muted);
+            font-size: 0.78rem;
+            white-space: nowrap;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .pill-btn {
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text);
+            border-radius: 12px;
+            padding: 0.58rem 0.9rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .pill-btn:hover {
+            border-color: var(--line-strong);
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-1px);
+        }
+
+        .donate-btn {
+            border: none;
+            color: #041219;
+            font-weight: 700;
+            background: linear-gradient(135deg, #34d399, #22d3ee);
+            box-shadow: 0 10px 22px rgba(34, 211, 238, 0.2);
+        }
+
+        .hero {
+            position: relative;
+            margin-top: 1rem;
+            padding: 2rem;
+            border-radius: 26px;
+            border: 1px solid var(--line);
+            background:
+                radial-gradient(700px 260px at 6% 8%, rgba(96, 165, 250, 0.2), transparent 70%),
+                radial-gradient(680px 280px at 95% 18%, rgba(45, 212, 191, 0.16), transparent 70%),
+                linear-gradient(180deg, rgba(18, 28, 38, 0.9), rgba(12, 20, 28, 0.92));
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: auto -12% -42% auto;
+            width: 380px;
+            height: 380px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.16), transparent 70%);
+            filter: blur(12px);
+            pointer-events: none;
+        }
+
+        .hero-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.45rem 0.75rem;
+            border-radius: 999px;
+            border: 1px solid rgba(52, 211, 153, 0.22);
+            background: rgba(52, 211, 153, 0.08);
+            color: #a7f3d0;
+            font-size: 0.82rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.85rem, 3.4vw, 3rem);
+            line-height: 1.08;
+            margin-bottom: 0.9rem;
+            max-width: 860px;
+            letter-spacing: 0.01em;
+        }
+
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, #67e8f9 10%, #34d399 50%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            color: var(--muted);
+            max-width: 760px;
+            font-size: 1.02rem;
+        }
+
+        .hero-stats {
+            margin-top: 1.35rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .stat-chip {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding: 0.7rem 0.85rem;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.02);
+            min-width: 150px;
+        }
+
+        .stat-chip strong {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            color: #d9f4ff;
+        }
+
+        .stat-chip span {
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        .categories-wrap {
+            margin-top: 1rem;
+            border-radius: 18px;
+            border: 1px solid var(--line);
+            background: rgba(15, 24, 33, 0.72);
+            backdrop-filter: blur(14px);
+            overflow: hidden;
+        }
+
+        .categories-header {
+            padding: 0.8rem 1rem 0;
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        .categories {
+            padding: 0.9rem 1rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.65rem;
+        }
+
+        .category-tag {
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.02);
+            color: #cfe5f3;
+            border-radius: 999px;
+            padding: 0.52rem 0.9rem;
+            font-size: 0.84rem;
+            cursor: pointer;
+            transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+        }
+
+        .category-tag:hover {
+            transform: translateY(-1px);
+            border-color: var(--line-strong);
+        }
+
+        .category-tag.active {
+            border-color: rgba(45, 212, 191, 0.4);
+            color: #05222a;
+            background: linear-gradient(135deg, rgba(94, 234, 212, 0.95), rgba(125, 211, 252, 0.95));
+            font-weight: 700;
+        }
+
+        main {
+            margin-top: 1.15rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--line);
+            background: linear-gradient(180deg, rgba(16, 26, 35, 0.95), rgba(12, 19, 26, 0.95));
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 16px 34px rgba(0, 0, 0, 0.18);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(96, 165, 250, 0.3);
+            box-shadow: 0 24px 46px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(45, 212, 191, 0.08) inset;
+        }
+
+        .card.hidden {
+            display: none;
+        }
+
+        .card-visual {
+            position: relative;
+            height: 176px;
+            padding: 1rem;
+            background:
+                radial-gradient(200px 120px at 10% 10%, rgba(255, 255, 255, 0.15), transparent 75%),
+                radial-gradient(280px 140px at 90% 85%, rgba(255, 255, 255, 0.08), transparent 80%),
+                linear-gradient(135deg, color-mix(in srgb, var(--brand) 58%, #0f1821), #111d27 80%);
+        }
+
+        .card-visual::before {
+            content: "";
+            position: absolute;
+            inset: 10px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background:
+                linear-gradient(115deg, rgba(255, 255, 255, 0.08), transparent 45%),
+                repeating-linear-gradient(
+                    135deg,
+                    rgba(255, 255, 255, 0.04) 0 1px,
+                    transparent 1px 10px
+                );
+            pointer-events: none;
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 0.9rem;
+            left: 0.9rem;
+            z-index: 2;
+            padding: 0.28rem 0.55rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(8, 14, 20, 0.35);
+            color: #d6ebf7;
+            font-size: 0.72rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-plate {
+            position: relative;
+            z-index: 1;
+            width: 92px;
+            height: 92px;
+            border-radius: 22px;
+            display: grid;
+            place-items: center;
+            margin-top: 1.8rem;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(242, 250, 255, 0.88));
+            border: 1px solid rgba(255, 255, 255, 0.65);
+            box-shadow: 0 18px 30px rgba(0, 0, 0, 0.22);
+        }
+
+        .logo-plate.show-fallback .app-logo {
+            display: none;
+        }
+
+        .logo-plate.show-fallback .logo-fallback {
+            display: grid;
+        }
+
+        .app-logo {
+            width: 62px;
+            height: 62px;
+            object-fit: contain;
+        }
+
+        .logo-fallback {
+            display: none;
+            width: 62px;
+            height: 62px;
+            border-radius: 16px;
+            place-items: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            color: #0a1820;
+            background: linear-gradient(135deg, rgba(94, 234, 212, 0.9), rgba(125, 211, 252, 0.95));
+        }
+
+        .visual-caption {
+            position: absolute;
+            right: 1rem;
+            bottom: 1rem;
+            max-width: 55%;
+            text-align: right;
+            color: rgba(234, 247, 255, 0.9);
+            font-size: 0.8rem;
+            line-height: 1.35;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
+        }
+
+        .visual-caption strong {
+            display: block;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            color: #fff;
+        }
+
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            padding: 1rem;
+            flex: 1;
+        }
+
+        .card-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 0.75rem;
+        }
+
+        .card-title-wrap {
+            min-width: 0;
+        }
+
+        .card-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.08rem;
+            line-height: 1.15;
+            margin-bottom: 0.28rem;
+            word-break: break-word;
+        }
+
+        .card-url {
+            color: var(--muted);
+            font-size: 0.74rem;
+            opacity: 0.88;
+        }
+
+        .cta-pill {
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.02);
+            color: #d8eefb;
+            padding: 0.38rem 0.65rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .card:hover .cta-pill {
+            border-color: rgba(52, 211, 153, 0.25);
+            background: rgba(52, 211, 153, 0.06);
+        }
+
+        .replace-section {
+            padding: 0.75rem;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.015);
+        }
+
+        .replace-title {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: #b7d4e7;
+            font-size: 0.76rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .replace-title::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.08);
+        }
+
+        .replace-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+        }
+
+        .replace-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.38rem;
+            max-width: 100%;
+            padding: 0.32rem 0.5rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+            color: #d7ecf8;
+            font-size: 0.72rem;
+        }
+
+        .replace-chip img {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 1px;
+            flex-shrink: 0;
+        }
+
+        .replace-chip.text-only {
+            color: #b9cfde;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .replace-chip span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .card-desc {
+            color: var(--muted);
+            font-size: 0.86rem;
+            line-height: 1.5;
+            min-height: 3.6em;
+        }
+
+        .card-footer {
+            margin-top: auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.65rem;
+        }
+
+        .card-platforms {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+        }
+
+        .platform-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            padding: 0.28rem 0.55rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+            color: #d6ecf9;
+        }
+
+        .platform-badge::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            opacity: 0.85;
+        }
+
+        .platform-mac { color: #d0d7de; }
+        .platform-win { color: #76b8ff; }
+        .platform-linux { color: #f7b36a; }
+
+        .open-btn {
+            border: 1px solid rgba(45, 212, 191, 0.25);
+            background: rgba(45, 212, 191, 0.08);
+            color: #c7fff5;
+            border-radius: 10px;
+            padding: 0.42rem 0.65rem;
+            font-size: 0.76rem;
+            cursor: pointer;
+            transition: transform 0.18s ease, background 0.18s ease;
+        }
+
+        .open-btn:hover {
+            transform: translateY(-1px);
+            background: rgba(45, 212, 191, 0.12);
+        }
+
+        .donation {
+            margin-top: 1.25rem;
+            border-radius: 24px;
+            border: 1px solid var(--line);
+            background:
+                radial-gradient(420px 160px at 20% 0%, rgba(96, 165, 250, 0.12), transparent 72%),
+                radial-gradient(520px 180px at 90% 0%, rgba(45, 212, 191, 0.1), transparent 72%),
+                linear-gradient(180deg, rgba(13, 21, 29, 0.92), rgba(10, 17, 24, 0.94));
+            box-shadow: var(--shadow);
+            padding: 1.8rem;
+        }
+
+        .donation-head h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.55rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .donation-head p {
+            color: var(--muted);
+        }
+
+        .qr-codes {
+            margin-top: 1.25rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 1rem;
+        }
+
+        .qr-item {
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            background: rgba(255, 255, 255, 0.02);
+            padding: 1rem;
+            display: grid;
+            place-items: center;
+            gap: 0.8rem;
+        }
+
+        .qr-item img {
+            width: 180px;
+            height: 180px;
+            object-fit: contain;
+            background: #fff;
+            border-radius: 14px;
+            padding: 0.5rem;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+        }
+
+        .qr-label {
+            font-weight: 700;
+            color: #c7eefb;
+        }
+
+        footer {
+            margin-top: 1rem;
+            padding: 1.2rem 0.35rem 0.4rem;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                padding: 1.35rem;
+            }
+
+            .visual-caption {
+                max-width: 60%;
+                font-size: 0.74rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .shell {
+                padding: 0.8rem 0.8rem 2rem;
+            }
+
+            header {
+                top: 8px;
+                padding: 0.85rem;
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .brand {
+                justify-content: center;
+            }
+
+            .brand-subtitle {
+                display: none;
+            }
+
+            .header-actions {
+                justify-content: center;
+            }
+
+            .pill-btn {
+                flex: 1 1 0;
+                text-align: center;
+            }
+
+            .hero-stats {
+                gap: 0.55rem;
+            }
+
+            .stat-chip {
+                min-width: calc(50% - 0.3rem);
+                flex: 1 1 0;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 0.9rem;
+            }
+
+            .card-visual {
+                height: 166px;
+            }
+
+            .visual-caption {
+                position: static;
+                margin-top: 0.7rem;
+                max-width: none;
+                text-align: left;
+            }
+
+            .logo-plate {
+                margin-top: 1.35rem;
+            }
+
+            .donation {
+                padding: 1.35rem;
+            }
+
+            .qr-item img {
+                width: 160px;
+                height: 160px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            * {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <header>
+            <div class="brand">
+                <div class="brand-badge">FS</div>
+                <div class="brand-text">
+                    <div class="brand-title">FreeSoftwareHub</div>
+                    <div class="brand-subtitle" data-en="Curated open-source alternatives" data-cn="精选开源替代软件">Curated open-source alternatives</div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="pill-btn" id="langToggle">EN / 中文</button>
+                <button class="pill-btn donate-btn" id="donateBtn" data-en="Donate" data-cn="赞助">Donate</button>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div class="hero-kicker" data-en="Open-source toolkit" data-cn="开源工具合集">Open-source toolkit</div>
+            <h1>
+                <span data-en="Replace expensive apps with" data-cn="用开源软件替代昂贵应用">Replace expensive apps with</span>
+                <span class="gradient" data-en="beautiful free alternatives" data-cn="更好看的免费替代方案">beautiful free alternatives</span>
+            </h1>
+            <p data-en="Discover practical open-source tools for design, video, development, office, and daily productivity. Click any card to open the official site." data-cn="发现适用于设计、视频、开发、办公和日常效率的开源工具。点击任一卡片即可打开官网。">Discover practical open-source tools for design, video, development, office, and daily productivity. Click any card to open the official site.</p>
+            <div class="hero-stats">
+                <div class="stat-chip">
+                    <strong id="softwareCount">0</strong>
+                    <span data-en="Free tools" data-cn="免费工具">Free tools</span>
+                </div>
+                <div class="stat-chip">
+                    <strong id="categoryCount">0</strong>
+                    <span data-en="Categories" data-cn="分类">Categories</span>
+                </div>
+                <div class="stat-chip">
+                    <strong>∞</strong>
+                    <span data-en="License cost saved" data-cn="节省授权费用">License cost saved</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="categories-wrap">
+            <div class="categories-header" data-en="Browse by category" data-cn="按分类浏览">Browse by category</div>
+            <nav class="categories" id="categories">
+                <button class="category-tag active" data-category="all" data-en="All" data-cn="全部">All</button>
+                <button class="category-tag" data-category="image-design" data-en="Image & Design" data-cn="图像设计">Image & Design</button>
+                <button class="category-tag" data-category="video" data-en="Video & Recording" data-cn="视频录制">Video & Recording</button>
+                <button class="category-tag" data-category="audio" data-en="Audio" data-cn="音频">Audio</button>
+                <button class="category-tag" data-category="office" data-en="Office & Writing" data-cn="办公写作">Office & Writing</button>
+                <button class="category-tag" data-category="development" data-en="Development" data-cn="开发工具">Development</button>
+                <button class="category-tag" data-category="3d-cad" data-en="3D & CAD" data-cn="3D设计">3D & CAD</button>
+                <button class="category-tag" data-category="utilities" data-en="Utilities" data-cn="实用工具">Utilities</button>
+            </nav>
+        </section>
+
+        <main>
+            <div class="cards-grid" id="cardsGrid"></div>
+        </main>
+
+        <section class="donation" id="donation">
+            <div class="donation-head">
+                <h2 data-en="Support Our Work" data-cn="支持我们的工作">Support Our Work</h2>
+                <p data-en="If these recommendations help you, a coffee keeps the list improving." data-cn="如果这些推荐对你有帮助，一杯咖啡可以支持我们持续更新。">If these recommendations help you, a coffee keeps the list improving.</p>
+            </div>
+            <div class="qr-codes">
+                <div class="qr-item">
+                    <img src="alipay.JPG" alt="Alipay QR">
+                    <span class="qr-label">Alipay</span>
+                </div>
+                <div class="qr-item">
+                    <img src="wxpay.JPG" alt="WeChat Pay QR">
+                    <span class="qr-label">WeChat Pay</span>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p data-en="Made for people who prefer freedom, quality, and clean tools." data-cn="为偏爱自由、质量与简洁工具的人而做。">Made for people who prefer freedom, quality, and clean tools.</p>
+        </footer>
+    </div>
+
+    <script>
+        const softwareData = [
+            {
+                name: "GIMP",
+                category: "image-design",
+                replaces: "Adobe Photoshop",
+                desc: {
+                    en: "Powerful, free image editor for photo retouching, image composition, and image creation.",
+                    cn: "强大的免费图像编辑器，用于照片修图、图像合成和图像创作。"
+                },
+                platforms: ["mac", "win", "linux"],
+                url: "https://www.gimp.org/",
+                color: "#5C5548"
+            },
+            {
+                name: "Inkscape",
+                category: "image-design",
+                replaces: "Adobe Illustrator",
+                desc: {
+                    en: "Professional vector graphics editor for SVG format with powerful tools.",
+                    cn: "功能强大的专业级矢量图形编辑器，支持SVG格式。"
+                },
+                platforms: ["mac", "win", "linux"],
+                url: "https://inkscape.org/",
+                color: "#000000"
+            },
+            {
+                name: "Krita",
+                category: "image-design",
+                replaces: "Photoshop / Corel Painter",
+                desc: {
+                    en: "Digital painting and illustration application with professional features.",
+                    cn: "具有专业功能的数字绘画和插图应用程序。"
+                },
+                platforms: ["mac", "win", "linux"],
+                url: "https://krita.org/",
+                color: "#3AABAB"
+            },
+            {
+                name: "DaVinci Resolve",
+                category: "video",
+                replaces: "Premiere Pro / Final Cut Pro",
+                desc: {
+                    en: "Professional video editing software with color correction and visual effects.",
+                    cn: "专业视频编辑软件，具有调色和视觉效果功能。"
+                },
+                platforms: ["mac", "win", "linux"],
+                url: "https://www.blackmagicdesign.com/products/davinciresolve/",
+                color: "#111827"
+            },
+            {
+                name: "OBS Studio",
+                category: "video",
+                replaces: "Camtasia / Screen Recorders",
+                desc: {
+                    en: "Free and open source software for video recording and live streaming.",
+                    cn: "免费开源的视频录制和直播软件。"
+                },
+                platforms: ["mac", "win", "linux"],
+                url: "https://obsproject.com/",
+                color: "#302E2B"
+            },
+            {
+                name: "Kap",
+                category: "video",
+                replaces: "CleanShot / Screen Recorders",
+                desc: {
+                    en: "Beautiful screen recorder for macOS with easy sharing.",
+                    cn: "macOS上精美的屏幕录制器，易于分享。"
+                },
+                platforms: ["mac"],
+                url: "https://getkap.co/",
+                color: "#3266CA"
+            },
+            {
+                name: "Shotcut",
+                category: "video",
+                replaces: "Premiere Pro",
+                desc: {
+                    en: "Free, open source, cross-platform video editor.",
+                    cn: "免费、开源、跨平台的视频编辑器。"
+                },
+                platforms: ["mac", "win", "linux"],
+                url: "https://shotcut.org/",
+                color: "#0B0B0D"
+            },
+            {
+                name: "Audacity",
+                category: "audio",
+                replaces: "Adobe Audition",
+                desc: {
+                    en: "Easy-to-use, multi-track audio editor and recorder.",
+                    cn: "易于使用的多轨音频编辑器和录音器。"
+                },
+                platforms: ["mac", "win", "linux"],
+                url: "https://www.audacityteam.org/",
+                color: "#1B1B1B"
+            },
+            {
+                name: "LibreOffice",
+                category: "office",
+                replaces: "Microsoft Office",
+                desc: {
+                    en: "Full-featured office suite with Writer, Calc, Impress and more.",
+                    cn: "功能完整的办公套件，包含文档、电子表格、演示等。"
+                },
+                platforms: ["mac", "win", "linux"],
+                url: "https://www.libreoffice.org/",
+                color: "#0F766E"
+            },
+            {
+                name: "MacDown",
+                category: "office",
+                replaces: "Typora / Ulysses",
+                desc: {
+                    en: "Open source Markdown editor for macOS with live preview.",
+                    cn: "macOS上开源的Markdown编辑器，支持实时预览。"
+                },
+                platforms: ["mac"],
+                url: "https://macdown.uranusjr.com/",
+                color: "#475569"
+            },
+            {
+                name: "Joplin",
+                category: "office",
+                replaces: "Evernote / Notion",
+                desc: {
+                    en: "Note-taking and to-do app with end-to-end encryption.",
+                    cn: "具有端到端加密的笔记和待办事项应用。"
+                },
+                platforms: ["mac", "win", "linux"],
+                url: "https://joplinapp.org/",
+                color: "#2563EB"
+            },
+            {
+                name: "VS Code",
+                category: "development",
+                replaces: "Sublime Text / JetBrains IDEs",
+                desc: {
+                    en: "Lightweight but powerful source code editor with extensions.",
+                    cn: "功能强大但轻量的代码编辑器，支持丰富的扩展。"
+                },
+                platforms: ["mac", "win", "linux"],
+                url: "https://code.visualstudio.com/",
+                color: "#007ACC"
+            },
+            {
+                name: "Zed",
+                category: "development",
+                replaces: "Sublime Text",
+                desc: {
+                    en: "High-performance, collaborative code editor built in Rust.",
+                    cn: "使用Rust构建的高性能协作代码编辑器。"
+                },
+                platforms: ["mac", "linux"],
+                url: "https://zed.dev/",
+                color: "#0F172A"
+            },
+            {
+                name: "Blender",
+                category: "3d-cad",
+                replaces: "Maya / 3ds Max / Cinema 4D",
+                desc: {
+                    en: "Open source 3D creation suite for modeling, animation, and rendering.",
+                    cn: "开源3D创作套件，支持建模、动画和渲染。"
+                },
+                platforms: ["mac", "win", "linux"],
+                url: "https://www.blender.org/",
+                color: "#EA7600"
+            },
+            {
+                name: "FreeCAD",
+                category: "3d-cad",
+                replaces: "AutoCAD / SolidWorks",
+                desc: {
+                    en: "Parametric 3D CAD modeler for mechanical design.",
+                    cn: "用于机械设计的参数化3D CAD建模工具。"
+                },
+                platforms: ["mac", "win", "linux"],
+                url: "https://www.freecad.org/",
+                color: "#6F2D91"
+            },
+            {
+                name: "VLC",
+                category: "utilities",
+                replaces: "Paid Media Players",
+                desc: {
+                    en: "Free and open source multimedia player that plays most formats.",
+                    cn: "免费开源的多媒体播放器，支持大多数格式。"
+                },
+                platforms: ["mac", "win", "linux"],
+                url: "https://www.videolan.org/vlc/",
+                color: "#FF7A00"
+            },
+            {
+                name: "7-Zip",
+                category: "utilities",
+                replaces: "WinRAR",
+                desc: {
+                    en: "File archiver with high compression ratio.",
+                    cn: "高压缩比的文件归档器。"
+                },
+                platforms: ["win"],
+                url: "https://www.7-zip.org/",
+                color: "#111827"
+            },
+            {
+                name: "PeaZip",
+                category: "utilities",
+                replaces: "WinRAR",
+                desc: {
+                    en: "Free file archiver and extractor with strong encryption.",
+                    cn: "具有强加密功能的免费文件归档器和提取器。"
+                },
+                platforms: ["win", "linux"],
+                url: "https://peazip.org/",
+                color: "#5C6A77"
+            },
+            {
+                name: "KeePassXC",
+                category: "utilities",
+                replaces: "1Password / LastPass",
+                desc: {
+                    en: "Secure, open source password manager.",
+                    cn: "安全的开源密码管理器。"
+                },
+                platforms: ["mac", "win", "linux"],
+                url: "https://keepassxc.org/",
+                color: "#6CA614"
+            },
+            {
+                name: "Bitwarden",
+                category: "utilities",
+                replaces: "1Password / LastPass",
+                desc: {
+                    en: "Open source password management for individuals and teams.",
+                    cn: "面向个人和团队的开源密码管理。"
+                },
+                platforms: ["mac", "win", "linux"],
+                url: "https://bitwarden.com/",
+                color: "#175DDC"
+            },
+            {
+                name: "HandBrake",
+                category: "utilities",
+                replaces: "Video Converters",
+                desc: {
+                    en: "Tool for converting video from nearly any format to modern codecs.",
+                    cn: "将视频从几乎任何格式转换为现代编解码器的工具。"
+                },
+                platforms: ["mac", "win", "linux"],
+                url: "https://handbrake.fr/",
+                color: "#1A1A1A"
+            }
+        ];
+
+        const categoryLabels = {
+            all: { en: "All", cn: "全部" },
+            "image-design": { en: "Image & Design", cn: "图像设计" },
+            video: { en: "Video", cn: "视频" },
+            audio: { en: "Audio", cn: "音频" },
+            office: { en: "Office", cn: "办公" },
+            development: { en: "Development", cn: "开发" },
+            "3d-cad": { en: "3D & CAD", cn: "3D设计" },
+            utilities: { en: "Utilities", cn: "实用工具" }
+        };
+
+        const uiText = {
+            en: {
+                replaces: "Replaces",
+                openSite: "Open Site",
+                official: "Official site"
+            },
+            cn: {
+                replaces: "替代软件",
+                openSite: "打开官网",
+                official: "官方网站"
+            }
+        };
+
+        const replacementLogoMap = {
+            "adobe photoshop": { label: "Photoshop", domain: "adobe.com" },
+            "photoshop": { label: "Photoshop", domain: "adobe.com" },
+            "adobe illustrator": { label: "Illustrator", domain: "adobe.com" },
+            "corel painter": { label: "Corel Painter", domain: "corel.com" },
+            "premiere pro": { label: "Premiere Pro", domain: "adobe.com" },
+            "final cut pro": { label: "Final Cut Pro", domain: "apple.com" },
+            "camtasia": { label: "Camtasia", domain: "techsmith.com" },
+            "cleanshot": { label: "CleanShot", domain: "cleanshot.com" },
+            "adobe audition": { label: "Audition", domain: "adobe.com" },
+            "microsoft office": { label: "Microsoft Office", domain: "microsoft.com" },
+            "typora": { label: "Typora", domain: "typora.io" },
+            "ulysses": { label: "Ulysses", domain: "ulysses.app" },
+            "evernote": { label: "Evernote", domain: "evernote.com" },
+            "notion": { label: "Notion", domain: "notion.so" },
+            "sublime text": { label: "Sublime Text", domain: "sublimetext.com" },
+            "jetbrains ides": { label: "JetBrains", domain: "jetbrains.com" },
+            "maya": { label: "Maya", domain: "autodesk.com" },
+            "3ds max": { label: "3ds Max", domain: "autodesk.com" },
+            "cinema 4d": { label: "Cinema 4D", domain: "maxon.net" },
+            "autocad": { label: "AutoCAD", domain: "autodesk.com" },
+            "solidworks": { label: "SolidWorks", domain: "solidworks.com" },
+            "winrar": { label: "WinRAR", domain: "win-rar.com" },
+            "1password": { label: "1Password", domain: "1password.com" },
+            "lastpass": { label: "LastPass", domain: "lastpass.com" }
+        };
+
+        const productLogoOverrides = {
+            "GIMP": "https://cdn.simpleicons.org/gimp",
+            "Inkscape": "https://cdn.simpleicons.org/inkscape",
+            "Krita": "https://cdn.simpleicons.org/krita",
+            "OBS Studio": "https://cdn.simpleicons.org/obsstudio",
+            "Audacity": "https://cdn.simpleicons.org/audacity",
+            "LibreOffice": "https://cdn.simpleicons.org/libreoffice",
+            "Joplin": "https://cdn.simpleicons.org/joplin",
+            "VS Code": "https://cdn.simpleicons.org/visualstudiocode",
+            "Blender": "https://cdn.simpleicons.org/blender",
+            "FreeCAD": "https://cdn.simpleicons.org/freecad",
+            "Bitwarden": "https://cdn.simpleicons.org/bitwarden",
+            "KeePassXC": "https://cdn.simpleicons.org/keepassxc",
+            "VLC": "https://cdn.simpleicons.org/vlcmediaplayer",
+            "7-Zip": "https://cdn.simpleicons.org/7zip",
+            "MacDown": "https://macdown.uranusjr.com/static/images/logo.png"
+        };
+
+        let currentLang = "en";
+        let currentCategory = "all";
+
+        function getPlatformBadge(platform) {
+            const labels = {
+                en: { mac: "Mac", win: "Windows", linux: "Linux" },
+                cn: { mac: "Mac", win: "Windows", linux: "Linux" }
+            };
+            return `<span class="platform-badge platform-${platform}">${labels[currentLang][platform]}</span>`;
+        }
+
+        function normalizeText(value) {
+            return value.toLowerCase().replace(/\s+/g, " ").trim();
+        }
+
+        function getDomainFromUrl(url) {
+            try {
+                return new URL(url).hostname.replace(/^www\./, "");
+            } catch (e) {
+                return url;
+            }
+        }
+
+        function getFaviconUrl(domainOrUrl, size = 128) {
+            return `https://www.google.com/s2/favicons?sz=${size}&domain_url=${encodeURIComponent(domainOrUrl)}`;
+        }
+
+        function escapeHtml(str) {
+            return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+        }
+
+        function buildReplacementItems(replacesText) {
+            const seen = new Set();
+            return replacesText
+                .split("/")
+                .map(item => item.trim())
+                .filter(Boolean)
+                .map(raw => {
+                    const key = normalizeText(raw);
+                    const mapped = replacementLogoMap[key];
+                    const item = mapped
+                        ? { label: mapped.label || raw, domain: mapped.domain || null }
+                        : { label: raw, domain: null };
+                    const dedupeKey = `${item.label}|${item.domain || ""}`;
+                    if (seen.has(dedupeKey)) return null;
+                    seen.add(dedupeKey);
+                    return item;
+                })
+                .filter(Boolean);
+        }
+
+        function renderReplacementChips(software) {
+            const items = buildReplacementItems(software.replaces);
+            return items.map(item => {
+                if (!item.domain) {
+                    return `<div class="replace-chip text-only"><span>${escapeHtml(item.label)}</span></div>`;
+                }
+                const logoSrc = getFaviconUrl(item.domain, 64);
+                return `
+                    <div class="replace-chip">
+                        <img src="${logoSrc}" alt="${escapeHtml(item.label)} logo" loading="lazy" data-fallback-src="${getFaviconUrl(item.domain, 32)}">
+                        <span>${escapeHtml(item.label)}</span>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        function getProductLogoUrl(software) {
+            return productLogoOverrides[software.name] || getFaviconUrl(getDomainFromUrl(software.url), 256);
+        }
+
+        function getCategoryLabel(category) {
+            const labels = categoryLabels[category];
+            if (!labels) return category;
+            return labels[currentLang];
+        }
+
+        function getSiteDisplay(url) {
+            return getDomainFromUrl(url);
+        }
+
+        function attachImageFallbacks(scope = document) {
+            scope.querySelectorAll("img[data-fallback-src]").forEach(img => {
+                if (img.dataset.fallbackBound) return;
+                img.dataset.fallbackBound = "1";
+                let tries = 0;
+                img.addEventListener("error", () => {
+                    tries += 1;
+                    if (tries === 1 && img.dataset.fallbackSrc && img.src !== img.dataset.fallbackSrc) {
+                        img.src = img.dataset.fallbackSrc;
+                        return;
+                    }
+                    if (img.closest(".logo-plate")) {
+                        img.closest(".logo-plate").classList.add("show-fallback");
+                    } else {
+                        img.style.display = "none";
+                    }
+                });
+            });
+        }
+
+        function openSoftware(software) {
+            window.open(software.url, "_blank", "noopener,noreferrer");
+        }
+
+        function createCard(software) {
+            const card = document.createElement("article");
+            card.className = "card";
+            card.dataset.category = software.category;
+            card.tabIndex = 0;
+            card.setAttribute("role", "button");
+            card.setAttribute("aria-label", `${software.name} - ${uiText[currentLang].openSite}`);
+            card.style.setProperty("--brand", software.color);
+
+            const desc = software.desc[currentLang];
+            const domain = getSiteDisplay(software.url);
+            const categoryLabel = getCategoryLabel(software.category);
+            const visualCaptionLabel = currentLang === "en" ? "Free alternative" : "免费替代";
+
+            card.innerHTML = `
+                <div class="card-visual">
+                    <div class="category-badge">${escapeHtml(categoryLabel)}</div>
+                    <div class="logo-plate">
+                        <img class="app-logo" src="${getProductLogoUrl(software)}" alt="${escapeHtml(software.name)} logo" loading="lazy" data-fallback-src="${getFaviconUrl(domain, 96)}">
+                        <span class="logo-fallback">${escapeHtml(software.name.charAt(0).toUpperCase())}</span>
+                    </div>
+                    <div class="visual-caption">
+                        <strong>${escapeHtml(software.name)}</strong>
+                        ${escapeHtml(visualCaptionLabel)}
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-head">
+                        <div class="card-title-wrap">
+                            <div class="card-title">${escapeHtml(software.name)}</div>
+                            <div class="card-url">${escapeHtml(uiText[currentLang].official)} · ${escapeHtml(domain)}</div>
+                        </div>
+                        <div class="cta-pill">${escapeHtml(uiText[currentLang].openSite)}</div>
+                    </div>
+
+                    <div class="replace-section">
+                        <div class="replace-title">${escapeHtml(uiText[currentLang].replaces)}</div>
+                        <div class="replace-list">${renderReplacementChips(software)}</div>
+                    </div>
+
+                    <div class="card-desc">${escapeHtml(desc)}</div>
+
+                    <div class="card-footer">
+                        <div class="card-platforms">
+                            ${software.platforms.map(getPlatformBadge).join("")}
+                        </div>
+                        <button class="open-btn" type="button">${escapeHtml(uiText[currentLang].openSite)}</button>
+                    </div>
+                </div>
+            `;
+
+            const openBtn = card.querySelector(".open-btn");
+            openBtn.addEventListener("click", (event) => {
+                event.stopPropagation();
+                openSoftware(software);
+            });
+
+            card.addEventListener("click", () => openSoftware(software));
+            card.addEventListener("keydown", (event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    openSoftware(software);
+                }
+            });
+
+            attachImageFallbacks(card);
+            return card;
+        }
+
+        function renderCards() {
+            const grid = document.getElementById("cardsGrid");
+            grid.innerHTML = "";
+
+            softwareData.forEach(software => {
+                const card = createCard(software);
+                if (currentCategory !== "all" && software.category !== currentCategory) {
+                    card.classList.add("hidden");
+                }
+                grid.appendChild(card);
+            });
+        }
+
+        function updateLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang === "cn" ? "zh-CN" : "en";
+
+            document.querySelectorAll("[data-en]").forEach(el => {
+                el.textContent = el.dataset[lang];
+            });
+
+            document.querySelectorAll(".category-tag").forEach(btn => {
+                btn.textContent = btn.dataset[lang];
+            });
+
+            renderCards();
+            updateCounts();
+        }
+
+        function toggleLanguage() {
+            updateLanguage(currentLang === "en" ? "cn" : "en");
+        }
+
+        function filterCategory(category) {
+            currentCategory = category;
+            document.querySelectorAll(".category-tag").forEach(btn => {
+                btn.classList.toggle("active", btn.dataset.category === category);
+            });
+
+            document.querySelectorAll(".card").forEach(card => {
+                card.classList.toggle("hidden", !(category === "all" || card.dataset.category === category));
+            });
+        }
+
+        function scrollToDonation() {
+            document.getElementById("donation").scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        function updateCounts() {
+            document.getElementById("softwareCount").textContent = String(softwareData.length);
+            const categorySet = new Set(softwareData.map(item => item.category));
+            document.getElementById("categoryCount").textContent = String(categorySet.size);
+        }
+
+        document.getElementById("langToggle").addEventListener("click", toggleLanguage);
+        document.getElementById("donateBtn").addEventListener("click", scrollToDonation);
+        document.querySelectorAll(".category-tag").forEach(btn => {
+            btn.addEventListener("click", () => filterCategory(btn.dataset.category));
+        });
+
+        renderCards();
+        updateCounts();
+        attachImageFallbacks(document);
+    </script>
+</body>
+</html>
